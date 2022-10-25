@@ -2,16 +2,10 @@
 # MCP3425
 
 ## Introduction
-Python3 library for the MCP3425 Analog to Digital Converter for Raspberry Pi.
-Forked from https://github.com/ControlEverythingCommunity/MCP3425
 
-The MCP3425 is a 1-Channel Analog to Digital Converter with I2C interface.
+This is a Python3 library for the MCP3425 Analog to Digital Converter. The MCP3425 
+is a 1-Channel Analog to Digital Converter with I2C interface and 16 bit resolution
 https://www.microchip.com/wwwproducts/en/MCP3425
-
-This Device is available from ControlEverything.com [SKU: MCP3425_I2CADC]
-
-https://www.controleverything.com/content/Analog-Digital-Converters?sku=MCP3425_I2CADC
-
 
 
 ## Requirements

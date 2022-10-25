@@ -13,5 +13,5 @@ fi
 EGGFILE="python_mcp3425-1.0-py3.5.egg"
 # sudo easy_install -m /usr/local/lib/python3.5/dist-packages/$EGGFILE
 sudo rm /usr/local/lib/python3.5/dist-packages/$EGGFILE
-sudo rm -r build dist
+sudo rm -r build dist python_mcp3425.egg-info
 echo "Uninstalled $EGGFILE"

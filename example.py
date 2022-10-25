@@ -2,30 +2,39 @@
 from time import sleep
 from mcp3425 import MCP3425
 
-adc = MCP3425()  # Default I2C bus is 1 (Raspberry Pi 3)
-#adc = mcp3425.MCP3425(0)  # Specify I2C bus
 
-# We must initialize the adc before reading it
-if not adc.init():
-    print("ADC could not be initialized")
-    exit(1)
+# Create with default parameters
+# MCP3425_DEFAULT_BUS = 0
+# MCP3425_DEFAULT_ADDRESS = 0x68
+# MCP3425_DEFAULT_VREF = 2.048
+adc = MCP3425()
+
+# specify bus, address, and voltage.
+adc = MCP3425(bus=0, address=0x68, vref=2.048)
 
 # Read the adc measurement
 data = adc.read()
 print("ADC Measurement:", data)
 
-# Read the adc measurement and convert
-voltage = adc.convert()
+# Calibrate voltage divider reading using two known voltages and readings:
+s1 = 1.3123525498214668, 9.0
+s2 = 1.9201210974456007, 13.0
+factor, offset = adc.calibrate(s1[0], s1[1], s2[0], s2[1])
+print("Dataset 1:", s1)
+print("Dataset 2:", s2)
+print("Factor:", factor)
+print("Offset:", offset)
+
+# Apply additional scaling and offset to the reading if a voltage divider is in use
+# this will override the calibration for this reading, but not update the settings provided with calibration
+voltage = adc.read(factor=7.123, offset=0.324)
 print("Voltage:", voltage)
 
-# Apply additional offset and scaling
-voltage = adc.convert(offset=0.1, factor=7.32)
-print("Voltage:", voltage)
-
-sleep(5)
-
-# Spew readings
+print("")
+print("Reading -> Voltage")
+# Spew calibrated readings
 while True:
-    voltage = adc.convert()
-    print("Voltage:", voltage)
     sleep(2)
+    reading = adc.read(1,0) # pure reading
+    voltage = adc.read() # using (saved) calibration data
+    print(reading, "->", voltage)
